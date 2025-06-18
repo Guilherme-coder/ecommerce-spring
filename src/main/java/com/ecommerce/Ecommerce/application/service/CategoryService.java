@@ -1,0 +1,42 @@
+package com.ecommerce.Ecommerce.application.service;
+
+import com.ecommerce.Ecommerce.domain.models.CategoryModel;
+import com.ecommerce.Ecommerce.domain.repository.CategoryRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class CategoryService {
+    private final CategoryRepository repository;
+
+    public CategoryService(CategoryRepository repository) {
+        this.repository = repository;
+    }
+
+    public List<CategoryModel> findAll() {
+        return repository.findAllByDeletedAtIsNull();
+    }
+
+    public Optional<CategoryModel> findById(Long id) {
+        return repository.findByIdAndDeletedAtIsNull(id);
+    }
+
+    public CategoryModel save(CategoryModel Category) {
+        return repository.save(Category);
+    }
+
+    public void delete(Long id) {
+        CategoryModel Category = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Category not found."));
+
+        Category.markAsDeleted();
+        repository.save(Category);
+    }
+
+    public void destroy(Long id) {
+        repository.deleteById(id);
+    }
+}

@@ -27,4 +27,9 @@ public class ProductModel extends BaseEntity {
     @NotNull(message = "Product price is required.")
     @Positive(message = "Product price must be greater than zero.")
     private float price;
+
+    @NotNull(message = "Product category is required.")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id", nullable = false)
+    private CategoryModel category;
 }

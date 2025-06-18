@@ -1,5 +1,6 @@
 package com.ecommerce.Ecommerce.api.controllers;
 
+import com.ecommerce.Ecommerce.api.dtos.products.ProductResponseDTO;
 import com.ecommerce.Ecommerce.application.service.ProductService;
 import com.ecommerce.Ecommerce.domain.models.ProductModel;
 import jakarta.validation.Valid;
@@ -19,8 +20,10 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductModel> listAll(){
-        return service.findAll();
+    public List<ProductResponseDTO> listAll(){
+        return service.findAll().stream()
+                .map(ProductResponseDTO::fromEntity)
+                .toList();
     }
 
     @GetMapping("/{id}")

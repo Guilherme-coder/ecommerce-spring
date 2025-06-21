@@ -2,10 +2,12 @@ package com.ecommerce.Ecommerce.domain.dtos.products;
 
 import com.ecommerce.Ecommerce.domain.models.ProductModel;
 
+import java.math.BigDecimal;
+
 public record ProductResponseDTO(
         Long id,
         String name,
-        Float price,
+        BigDecimal price,
         Long categoryId
 ) {
     public static ProductResponseDTO fromEntity(ProductModel product) {

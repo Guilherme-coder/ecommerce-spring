@@ -1,6 +1,6 @@
 package com.ecommerce.Ecommerce.domain.models;
 
-import com.ecommerce.Ecommerce.domain.models.base.BaseEntity;
+import com.ecommerce.Ecommerce.domain.models.base.BaseModel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -10,13 +10,15 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "tb_products")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class ProductModel extends BaseEntity {
+public class ProductModel extends BaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,7 +28,7 @@ public class ProductModel extends BaseEntity {
 
     @NotNull(message = "Product price is required.")
     @Positive(message = "Product price must be greater than zero.")
-    private float price;
+    private BigDecimal price;
 
     @NotNull(message = "Product category is required.")
     @ManyToOne(fetch = FetchType.EAGER)

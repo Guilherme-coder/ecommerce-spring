@@ -1,6 +1,6 @@
 package com.ecommerce.Ecommerce.domain.models;
 
-import com.ecommerce.Ecommerce.domain.models.base.BaseEntity;
+import com.ecommerce.Ecommerce.domain.models.base.BaseModel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class CategoryModel extends BaseEntity {
+public class CategoryModel extends BaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

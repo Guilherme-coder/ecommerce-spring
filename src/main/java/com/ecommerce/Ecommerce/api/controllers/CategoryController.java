@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/api/categories")
 public class CategoryController {
 
     private final CategoryService service;
@@ -31,7 +31,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryModel> create(@Valid @RequestBody CategoryModel Category) {
+    public ResponseEntity<CategoryModel> save(@Valid @RequestBody CategoryModel Category) {
         return ResponseEntity.ok(service.save(Category));
     }
 

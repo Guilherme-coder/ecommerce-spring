@@ -1,7 +1,7 @@
 package com.ecommerce.Ecommerce.api.controllers;
 
 import com.ecommerce.Ecommerce.application.security.JwtUtil;
-import com.ecommerce.Ecommerce.domain.dtos.auth.AuthRegisterRequest;
+import com.ecommerce.Ecommerce.domain.dtos.auth.AuthRegisterRequestDTO;
 import com.ecommerce.Ecommerce.domain.dtos.auth.AuthRequest;
 import com.ecommerce.Ecommerce.domain.dtos.auth.AuthResponse;
 import com.ecommerce.Ecommerce.domain.models.UserModel;
@@ -47,7 +47,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody AuthRegisterRequest request) {
+    public ResponseEntity<?> register(@Valid @RequestBody AuthRegisterRequestDTO request) {
         if (userRepository.findByUsername(request.username()).isPresent()) {
             return ResponseEntity.badRequest().body("user already exists.");
         }
@@ -56,12 +56,13 @@ public class AuthController {
 
         UserModel newUser = new UserModel();
         newUser.setUsername(request.username());
+        newUser.setEmail(request.email());
         newUser.setPassword(encryptedPassword);
         newUser.setRole(request.role());
 
         userRepository.save(newUser);
 
-        return ResponseEntity.ok("user successfully register.");
+        return ResponseEntity.ok("user successfully registered.");
     }
 
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 public class ProductController {
 
     private final ProductService service;
@@ -34,7 +34,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductModel> create(@Valid @RequestBody ProductModel product) {
+    public ResponseEntity<ProductModel> save(@Valid @RequestBody ProductModel product) {
         return ResponseEntity.ok(service.save(product));
     }
 

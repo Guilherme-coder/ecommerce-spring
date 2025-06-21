@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 @MappedSuperclass
-public abstract class BaseEntity implements SoftDeletable {
+public abstract class BaseModel implements SoftDeletable {
 
     @Column(name = "created_at", updatable = false)
     protected LocalDateTime createdAt;

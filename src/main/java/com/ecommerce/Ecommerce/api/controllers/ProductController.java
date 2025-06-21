@@ -1,6 +1,6 @@
 package com.ecommerce.Ecommerce.api.controllers;
 
-import com.ecommerce.Ecommerce.api.dtos.products.ProductResponseDTO;
+import com.ecommerce.Ecommerce.domain.dtos.products.ProductResponseDTO;
 import com.ecommerce.Ecommerce.application.service.ProductService;
 import com.ecommerce.Ecommerce.domain.models.ProductModel;
 import jakarta.validation.Valid;

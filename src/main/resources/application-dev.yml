@@ -1,3 +1,7 @@
+jwt:
+  secret: "sUAOW3YOeY9aFtKQkqj1xvP0MQhOo0TxG2Qp7ElPxzE="
+  expiration: 86400000
+
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/ecommerce?useSSL=false&serverTimezone=UTC

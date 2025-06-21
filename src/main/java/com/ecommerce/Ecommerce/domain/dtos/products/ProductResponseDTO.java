@@ -1,4 +1,4 @@
-package com.ecommerce.Ecommerce.api.dtos.products;
+package com.ecommerce.Ecommerce.domain.dtos.products;
 
 import com.ecommerce.Ecommerce.domain.models.ProductModel;
 

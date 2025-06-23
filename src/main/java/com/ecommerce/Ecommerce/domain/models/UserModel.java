@@ -1,5 +1,6 @@
 package com.ecommerce.Ecommerce.domain.models;
 
+import com.ecommerce.Ecommerce.domain.dtos.auth.AuthRegisterRequestDTO;
 import com.ecommerce.Ecommerce.domain.models.base.BaseModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,4 +26,11 @@ public class UserModel extends BaseModel {
     private String password;
 
     private String role;
+
+    public UserModel(AuthRegisterRequestDTO request) {
+        this.username = request.username();
+        this.email = request.email();
+        this.password = request.password();
+        this.role = request.role();
+    }
 }

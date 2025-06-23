@@ -1,6 +1,7 @@
 package com.ecommerce.Ecommerce.api.controllers;
 
 import com.ecommerce.Ecommerce.application.service.CategoryService;
+import com.ecommerce.Ecommerce.domain.dtos.category.CategoryRequestDTO;
 import com.ecommerce.Ecommerce.domain.models.CategoryModel;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -31,15 +32,15 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryModel> save(@Valid @RequestBody CategoryModel Category) {
+    public ResponseEntity<CategoryModel> save(@Valid @RequestBody CategoryRequestDTO Category) {
         return ResponseEntity.ok(service.save(Category));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryModel> update(@PathVariable Long id, @Valid @RequestBody CategoryModel updatedCategory) {
+    public ResponseEntity<CategoryModel> update(@PathVariable Long id, @Valid @RequestBody CategoryRequestDTO updatedCategory) {
         return service.findById(id)
                 .map(existing -> {
-                    updatedCategory.setId(id);
+                    updatedCategory.toEntity().setId(id);
                     return ResponseEntity.ok(service.save(updatedCategory));
                 })
                 .orElse(ResponseEntity.notFound().build());
@@ -48,7 +49,7 @@ public class CategoryController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable Long id) {
         return service.findById(id)
-                .map(Category -> {
+                .map(category -> {
                     service.delete(id);
                     return ResponseEntity.noContent().build();
                 })

@@ -19,6 +19,5 @@ public class CategoryModel extends BaseModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Category name is required.")
     private String name;
 }

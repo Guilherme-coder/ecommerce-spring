@@ -1,5 +1,6 @@
 package com.ecommerce.Ecommerce.application.service;
 
+import com.ecommerce.Ecommerce.domain.dtos.category.CategoryRequestDTO;
 import com.ecommerce.Ecommerce.domain.models.CategoryModel;
 import com.ecommerce.Ecommerce.domain.repository.CategoryRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,8 +23,8 @@ public class CategoryService {
         return repository.findByIdAndDeletedAtIsNull(id);
     }
 
-    public CategoryModel save(CategoryModel Category) {
-        return repository.save(Category);
+    public CategoryModel save(CategoryRequestDTO category) {
+        return repository.save(category.toEntity());
     }
 
     public void delete(Long id) {

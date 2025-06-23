@@ -1,5 +1,6 @@
 package com.ecommerce.Ecommerce.api.exception;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<?> handleEntityNotFound(EntityNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
+                "error", ex.getMessage()
+        ));
+    }
+
+    @ExceptionHandler(EntityExistsException.class)
+    public ResponseEntity<?> handleEntityExists(EntityExistsException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of(
                 "error", ex.getMessage()
         ));
     }

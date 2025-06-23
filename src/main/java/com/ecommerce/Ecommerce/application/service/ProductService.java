@@ -3,18 +3,16 @@ package com.ecommerce.Ecommerce.application.service;
 import com.ecommerce.Ecommerce.domain.models.ProductModel;
 import com.ecommerce.Ecommerce.domain.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository repository;
-
-    public ProductService(ProductRepository repository) {
-        this.repository = repository;
-    }
 
     public List<ProductModel> findAll() {
         return repository.findAllByDeletedAtIsNull();

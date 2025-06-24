@@ -26,33 +26,23 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CategoryModel> find(@PathVariable Long id) {
-        return service.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(service.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<CategoryModel> save(@Valid @RequestBody CategoryRequestDTO Category) {
-        return ResponseEntity.ok(service.save(Category));
+    public ResponseEntity<CategoryModel> save(@Valid @RequestBody CategoryRequestDTO category) {
+        return ResponseEntity.ok(service.save(category));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryModel> update(@PathVariable Long id, @Valid @RequestBody CategoryRequestDTO updatedCategory) {
-        return service.findById(id)
-                .map(existing -> {
-                    updatedCategory.toEntity().setId(id);
-                    return ResponseEntity.ok(service.save(updatedCategory));
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<CategoryModel> update(@PathVariable Long id, @Valid @RequestBody CategoryRequestDTO category) {
+
+        return ResponseEntity.ok(service.update(id, category));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Long id) {
-        return service.findById(id)
-                .map(category -> {
-                    service.delete(id);
-                    return ResponseEntity.noContent().build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

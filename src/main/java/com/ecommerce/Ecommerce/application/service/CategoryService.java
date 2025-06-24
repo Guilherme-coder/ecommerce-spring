@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,20 +18,27 @@ public class CategoryService {
         return repository.findAllByDeletedAtIsNull();
     }
 
-    public Optional<CategoryModel> findById(Long id) {
-        return repository.findByIdAndDeletedAtIsNull(id);
+    public CategoryModel findById(Long id) {
+        return repository.findByIdAndDeletedAtIsNull(id)
+                .orElseThrow(() -> new EntityNotFoundException("category not found"));
     }
 
-    public CategoryModel save(CategoryRequestDTO category) {
-        return repository.save(category.toEntity());
+    public CategoryModel save(CategoryRequestDTO categoryRequest) {
+        return repository.save(categoryRequest.toEntity());
+    }
+
+    public CategoryModel update(Long id, CategoryRequestDTO categoryRequest) {
+        CategoryModel category = findById(id);
+        category.setName(categoryRequest.name());
+
+        return repository.save(category);
     }
 
     public void delete(Long id) {
-        CategoryModel Category = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Category not found."));
+        CategoryModel category = findById(id);
 
-        Category.markAsDeleted();
-        repository.save(Category);
+        category.markAsDeleted();
+        repository.save(category);
     }
 
     public void destroy(Long id) {

@@ -2,9 +2,6 @@ package com.ecommerce.Ecommerce.domain.models;
 
 import com.ecommerce.Ecommerce.domain.models.base.BaseModel;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,14 +20,10 @@ public class ProductModel extends BaseModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Product name is required.")
     private String name;
 
-    @NotNull(message = "Product price is required.")
-    @Positive(message = "Product price must be greater than zero.")
     private BigDecimal price;
 
-    @NotNull(message = "Product category is required.")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", nullable = false)
     private CategoryModel category;

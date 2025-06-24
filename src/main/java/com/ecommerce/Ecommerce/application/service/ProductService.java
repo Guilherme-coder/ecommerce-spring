@@ -1,5 +1,7 @@
 package com.ecommerce.Ecommerce.application.service;
 
+import com.ecommerce.Ecommerce.domain.dtos.products.ProductRequestDTO;
+import com.ecommerce.Ecommerce.domain.models.CategoryModel;
 import com.ecommerce.Ecommerce.domain.models.ProductModel;
 import com.ecommerce.Ecommerce.domain.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -7,34 +9,52 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
-    private final ProductRepository repository;
+    private final ProductRepository productRepository;
+    private final CategoryService categoryService;
 
     public List<ProductModel> findAll() {
-        return repository.findAllByDeletedAtIsNull();
+        return productRepository.findAllByDeletedAtIsNull();
     }
 
-    public Optional<ProductModel> findById(Long id) {
-        return repository.findByIdAndDeletedAtIsNull(id);
+    public ProductModel findById(Long id) {
+        return productRepository.findByIdAndDeletedAtIsNull(id)
+                .orElseThrow(() -> new EntityNotFoundException("product not found."));
     }
 
-    public ProductModel save(ProductModel product) {
-        return repository.save(product);
+    public ProductModel save(ProductRequestDTO productRequest) {
+        CategoryModel category = categoryService.findById(productRequest.categoryId());
+
+        ProductModel product = new ProductModel();
+        product.setName(productRequest.name());
+        product.setPrice(productRequest.price());
+        product.setCategory(category);
+
+        return productRepository.save(product);
+    }
+
+    public ProductModel update(Long id, ProductRequestDTO productRequest) {
+        CategoryModel category = categoryService.findById(productRequest.categoryId());
+
+        ProductModel product = findById(id);
+        product.setId(id);
+        product.setName(productRequest.name());
+        product.setPrice(productRequest.price());
+        product.setCategory(category);
+        return productRepository.save(product);
     }
 
     public void delete(Long id) {
-        ProductModel product = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Product not found."));
+        ProductModel product = findById(id);
 
         product.markAsDeleted();
-        repository.save(product);
+        productRepository.save(product);
     }
 
     public void destroy(Long id) {
-        repository.deleteById(id);
+        productRepository.deleteById(id);
     }
 }
